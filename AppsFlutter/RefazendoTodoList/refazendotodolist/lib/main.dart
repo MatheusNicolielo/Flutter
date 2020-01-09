@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         */
       ),
       body: ListView.builder(
-        // Recomendado para utilizar com listas
+        // body para utilizar com listas
         itemCount: widget.items
             .length, // Diz qual o tamanho do list view, no caso sempre o tamanho da lista 'items'
         itemBuilder: (BuildContext ctxt, int index) {
