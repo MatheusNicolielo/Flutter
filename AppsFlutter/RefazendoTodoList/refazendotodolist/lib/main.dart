@@ -42,6 +42,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var newTaskCrl = TextEditingController(); // Vai fazer o controle do texto
 
+  void add() {
+    if (newTaskCrl.text.isEmpty) return;
+    setState(() {
+      widget.items.add(
+        Item(title: newTaskCrl.text, done: false),
+      );
+      newTaskCrl.text = ""; //newTaskCrl.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +100,14 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        // Botão de '+' para salvar tarefas
+        onPressed: () {
+          add();
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
       ),
     );
   }
