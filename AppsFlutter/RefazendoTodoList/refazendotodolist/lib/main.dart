@@ -7,7 +7,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Todo List',
+      title: "Todo List",
       debugShowCheckedModeBanner: false, // Tirar a img/logozinha de debug
       theme: ThemeData(
         primarySwatch: Colors.blue, // Paleta de Cores
@@ -40,13 +40,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var newTaskCrl = TextEditingController(); // Vai fazer o controle do texto
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // o esqueleto da página
       appBar: AppBar(
-        //leading: Text("Menu Hamburquer"),
-        title: Text("Todo List"),
+        //leading: Text("Oi"), // Menu hamburguer
+        title: TextFormField(
+          controller: newTaskCrl,
+          keyboardType: TextInputType.text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+          ),
+          decoration: InputDecoration(
+            labelText: "Nova Tarefa",
+            labelStyle: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ), // Cria uma caixa de texto no lugar
         /*
         actions: <Widget>[
           Icon(Icons.plus_one), // Icones canto direito
