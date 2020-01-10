@@ -43,12 +43,20 @@ class _HomePageState extends State<HomePage> {
   var newTaskCrl = TextEditingController(); // Vai fazer o controle do texto
 
   void add() {
+    // Adicionar um item ao checkbox
     if (newTaskCrl.text.isEmpty) return;
     setState(() {
       widget.items.add(
         Item(title: newTaskCrl.text, done: false),
       );
       newTaskCrl.text = ""; //newTaskCrl.clear();
+    });
+  }
+
+  void remove(int index) {
+    // Remover um items
+    setState(() {
+      widget.items.removeAt(index);
     });
   }
 
@@ -85,18 +93,29 @@ class _HomePageState extends State<HomePage> {
           final item =
               widget.items[index]; // Código repetivel salvo em uma variavel
 
-          return CheckboxListTile(
-            // Lista de checkbox
-            title: Text(item.title), // O que serão as escritas, titulos
+          return Dismissible(
+            // Widget que permite arrastar os items para os lados
+            child: CheckboxListTile(
+              // Lista de checkbox
+              title: Text(item.title), // O que serão as escritas, titulos
+              value: item.done, // Valor True/False, Selecionado/NãoSelecionado
+              onChanged: (value) {
+                // Na mudança faça..
+                setState(() {
+                  // Salve o estado..
+                  item.done =
+                      value; // Novo estado de algo, no caso o 'done' do 'item' recebe o valor que a pessoa esta selecionando ou tirando a seleção
+                });
+              },
+            ),
             key: Key(item.title), // Identificador das chaves
-            value: item.done, // Valor True/False, Selecionado/NãoSelecionado
-            onChanged: (value) {
-              // Na mudança faça..
-              setState(() {
-                // Salve o estado..
-                item.done =
-                    value; // Novo estado de algo, no caso o 'done' do 'item' recebe o valor que a pessoa esta selecionando ou tirando a seleção
-              });
+            background: Container(
+              color: Colors.red.withOpacity(0.5),
+              child: Icon(Icons.close),
+              alignment: AlignmentDirectional.centerEnd,
+            ), // Background do Dismissible
+            onDismissed: (direction) {
+              remove(index);
             },
           );
         },
