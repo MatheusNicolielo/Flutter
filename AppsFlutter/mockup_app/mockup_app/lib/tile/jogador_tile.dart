@@ -42,7 +42,7 @@ class _JogadorTileState extends State<JogadorTile> {
           ],
         ),
       ),
-      onTap: _onTap,
+      //onTap: _onTap,
     );
   }
 
@@ -54,6 +54,9 @@ class _JogadorTileState extends State<JogadorTile> {
           ? FileImage(File(widget._jogadorModel.image1))
           : AssetImage('assets/crono.jpg'),
       radius: 42,
+      child: InkWell(
+        onTap: _onTap,
+      ),
     );
   }
 
@@ -68,6 +71,8 @@ class _JogadorTileState extends State<JogadorTile> {
               widget._jogadorModel.heart.toString(), Colors.black54),
           _buildContanerTile1(FontAwesomeIcons.skullCrossbones,
               widget._jogadorModel.iniciatiiva.toString(), Colors.black45),
+          _buildContanerTile1(FontAwesomeIcons.check,
+              widget._jogadorModel.auxiliarVida.toString(), Colors.black45)
         ],
       ),
     );
@@ -83,18 +88,6 @@ class _JogadorTileState extends State<JogadorTile> {
           Text(
             widget._jogadorModel.nome,
             style: _textStyle(FontWeight.w500),
-          ),
-          Row(
-            children: <Widget>[
-              Text(
-                "Adicionar/Subtrair Vida: ",
-                style: _textStyle(FontWeight.w500),
-              ),
-              Text(
-                widget._jogadorModel.auxiliarVida.toString(),
-                style: _textStyle(),
-              ),
-            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -121,7 +114,7 @@ class _JogadorTileState extends State<JogadorTile> {
                 onTap: _onDecrement,
               ),
               SizedBox(
-                width: 3,
+                width: 2,
               ),
               InkWell(
                 child: Container(
@@ -144,7 +137,7 @@ class _JogadorTileState extends State<JogadorTile> {
                 onTap: _onIncrement,
               ),
               SizedBox(
-                width: 3,
+                width: 2,
               ),
               InkWell(
                 child: Container(
@@ -167,7 +160,7 @@ class _JogadorTileState extends State<JogadorTile> {
                 onTap: _onDecrementDez,
               ),
               SizedBox(
-                width: 3,
+                width: 2,
               ),
               InkWell(
                 child: Container(
@@ -190,27 +183,15 @@ class _JogadorTileState extends State<JogadorTile> {
                 onTap: _onIncrementDez,
               ),
               SizedBox(
-                width: 3,
+                width: 2,
               ),
               InkWell(
                 child: Container(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   height: 35,
-                  width: 38,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.blue,
-                    border: new Border.all(
-                      color: Colors.black,
-                    ),
-                  ),
                   child: Center(
-                    child: Text(
-                      "OK",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                      ),
+                    child: Icon(
+                      Icons.check,
                     ),
                   ),
                 ),

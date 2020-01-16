@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Fila de Combate'),
       ),
       body: FutureBuilder<List<JogadorModel>>(
           future: Service.getListaJogador(),
