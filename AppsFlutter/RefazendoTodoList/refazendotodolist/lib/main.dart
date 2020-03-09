@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'models/items.dart';
 
 void main() => runApp(App());
@@ -24,6 +27,7 @@ class HomePage extends StatefulWidget {
     items = [];
 
     // Itens para teste
+    /*
     items.add(
       Item(title: "Item 1", done: false),
     );
@@ -33,6 +37,7 @@ class HomePage extends StatefulWidget {
     items.add(
       Item(title: "Item 3", done: false),
     );
+    */
   }
 
   @override
@@ -50,6 +55,7 @@ class _HomePageState extends State<HomePage> {
         Item(title: newTaskCrl.text, done: false),
       );
       newTaskCrl.text = ""; //newTaskCrl.clear();
+      save();
     });
   }
 
@@ -57,7 +63,32 @@ class _HomePageState extends State<HomePage> {
     // Remover um items
     setState(() {
       widget.items.removeAt(index);
+      save();
     });
+  }
+
+  Future load() async {
+    // Carregar os dados de forma assincrona(Nunca é em tempo real)
+    // Future: é como uma promessa
+    var prefs = await SharedPreferences.getInstance();
+    var data = prefs.getString('data');
+
+    if (data != null) {
+      Iterable decoded = jsonDecode(data);
+      List<Item> result = decoded.map((x) => Item.fromJson(x)).toList();
+      setState(() {
+        widget.items = result;
+      });
+    }
+  }
+
+  save() async {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setString('data', jsonEncode(widget.items));
+  } // Salvando dados
+
+  _HomePageState() {
+    load();
   }
 
   @override
@@ -105,6 +136,7 @@ class _HomePageState extends State<HomePage> {
                   // Salve o estado..
                   item.done =
                       value; // Novo estado de algo, no caso o 'done' do 'item' recebe o valor que a pessoa esta selecionando ou tirando a seleção
+                  save();
                 });
               },
             ),
